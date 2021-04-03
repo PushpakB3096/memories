@@ -4,21 +4,15 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 
-const app = express();
-
-// allow CORS
-app.use(cors());
-
-// constants go here
-const CONNECTION_URL =
-  "mongodb+srv://pushpak-memories:pass123@cluster0.keakc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
-const PORT = process.env.PORT || 5000;
-
 // all routes go here
 import postRoutes from "./routes/posts.js";
 
-// registering routes
-app.use("/posts", postRoutes);
+const app = express();
+
+// constants go here
+const CONNECTION_URL =
+  "mongodb+srv://pushpak-memories:pass123@cluster0.keakc.mongodb.net/memoriesDb?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 5000;
 
 // only allow 30mb of file size for images
 app.use(
@@ -34,6 +28,11 @@ app.use(
     extended: true,
   })
 );
+// allow CORS
+app.use(cors());
+
+// registering routes
+app.use("/posts", postRoutes);
 
 // connect to mongoose
 mongoose

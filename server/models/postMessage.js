@@ -6,7 +6,6 @@ const postSchema = mongoose.Schema({
   message: String,
   creator: String,
   tags: [String],
-  // the image will be converted to a base64 string
   selectedFile: String,
   likeCount: {
     type: Number,
@@ -19,6 +18,6 @@ const postSchema = mongoose.Schema({
 });
 
 // creating a model from the schema
-const PostMessage = mongoose.model("PostMessage", postSchema);
+var PostMessage = mongoose.model("PostMessage", postSchema);
 
 export default PostMessage;
