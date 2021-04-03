@@ -4,8 +4,12 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 
-// constants go here
 const app = express();
+
+// allow CORS
+app.use(cors());
+
+// constants go here
 const CONNECTION_URL =
   "mongodb+srv://pushpak-memories:pass123@cluster0.keakc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
@@ -30,9 +34,6 @@ app.use(
     extended: true,
   })
 );
-
-// allow CORS
-app.use(cors());
 
 // connect to mongoose
 mongoose
