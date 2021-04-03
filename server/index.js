@@ -4,12 +4,17 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 
-const app = express();
-
 // constants go here
+const app = express();
 const CONNECTION_URL =
   "mongodb+srv://pushpak-memories:pass123@cluster0.keakc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
+
+// all routes go here
+import postRoutes from "./routes/posts.js";
+
+// registering routes
+app.use("/posts", postRoutes);
 
 // only allow 30mb of file size for images
 app.use(
