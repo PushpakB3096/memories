@@ -4,6 +4,7 @@ export default (posts = [], action) => {
       return action.payload;
     case "CREATE":
       return [...posts, action.payload];
+    case "LIKE_POST":
     case "UPDATE":
       // find the post which was just updated and return the updated post. For others, return the post as it is
       return posts.map((post) =>
