@@ -34,6 +34,11 @@ app.use(cors());
 // registering routes
 app.use("/posts", postRoutes);
 
+// add greetings for deployed API
+app.use("/", (req, res) => {
+  res.send("Welcome to Memories API by Pushpak Bhattacharya");
+});
+
 // connect to mongoose
 mongoose
   .connect(process.env.CONNECTION_URI, {
