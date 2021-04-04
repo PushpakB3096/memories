@@ -38,10 +38,21 @@ const Form = ({ currentId, setCurrentId }) => {
     } else {
       dispatch(createPost(postData));
     }
+    // clears input when the submit button is clicked
+    clear();
   };
 
   // function to handle the clearing of the form
-  const clear = () => {};
+  const clear = () => {
+    setPostData({
+      creator: "",
+      title: "",
+      message: "",
+      tags: "",
+      selectedFile: "",
+    });
+    setCurrentId(null);
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -51,7 +62,9 @@ const Form = ({ currentId, setCurrentId }) => {
         noValidate
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Creating a Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? "Editing" : "Creating"} a Memory
+        </Typography>
         {/* input for creator of post */}
         <TextField
           name="creator"

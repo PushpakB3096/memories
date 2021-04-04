@@ -14,9 +14,10 @@ const App = () => {
 
   const [currentId, setCurrentId] = useState(null);
 
+  // refetch all the posts when the current ID changes
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [dispatch, currentId]);
 
   return (
     <Container maxWidth="lg">
