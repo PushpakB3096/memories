@@ -15,6 +15,7 @@ export default makeStyles((theme) => ({
   image: {
     marginLeft: "15px",
   },
+  // style will be applied when screen size is small or below
   [theme.breakpoints.down("sm")]: {
     mainContainer: {
       flexDirection: "column-reverse",
