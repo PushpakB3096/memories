@@ -3,15 +3,15 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import dotenv from "dotenv";
 
 // all routes go here
 import postRoutes from "./routes/posts.js";
 
 const app = express();
+dotenv.config();
 
 // constants go here
-const CONNECTION_URL =
-  "mongodb+srv://pushpak-memories:pass123@cluster0.keakc.mongodb.net/memoriesDb?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;
 
 // only allow 30mb of file size for images
@@ -36,7 +36,7 @@ app.use("/posts", postRoutes);
 
 // connect to mongoose
 mongoose
-  .connect(CONNECTION_URL, {
+  .connect(process.env.CONNECTION_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
