@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import useStyles from "./styles";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePost } from "../../actions/posts";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
+  // if we have a current ID, then that means we are editing a post. In that case, we need to fetch the same post from the state
+  const post = useSelector((state) =>
+    currentId ? state.posts.find((p) => p._id === currentId) : null
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  // clicked post should be populated in the form
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
 
   // creating the state that will hold the post data
   const [postData, setPostData] = useState({
@@ -22,7 +31,13 @@ const Form = () => {
   const handleSubmit = (e) => {
     // to prevent browser refresh
     e.preventDefault();
-    dispatch(createPost(postData));
+
+    // if we have an ID then that means that we are trying to edit an existing post. Otherwise, we are creating a new post
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+    } else {
+      dispatch(createPost(postData));
+    }
   };
 
   // function to handle the clearing of the form
