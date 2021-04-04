@@ -58,7 +58,7 @@ const Post = ({ post, setCurrentId }) => {
       </Typography>
       {/* this will display the title of the memory */}
       <CardContent>
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="body2" color="textSecondary" component="p">
           {post.message}
         </Typography>
       </CardContent>
