@@ -14,7 +14,6 @@ const App = () => {
           <Route component={Home} path="/" exact />
           <Route component={Auth} path="/auth" exact />
         </Switch>
-        <Home />
       </Container>
     </BrowserRouter>
   );
