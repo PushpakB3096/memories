@@ -52,7 +52,12 @@ const Navbar = () => {
             </Button>
           </div>
         ) : (
-          <Button component={Link} to="/" variant="contained" color="primary">
+          <Button
+            component={Link}
+            to="/auth"
+            variant="contained"
+            color="primary"
+          >
             Sign in
           </Button>
         )}
