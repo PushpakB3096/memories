@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.headers.Authorization?.split(" ")[1];
+    const token = req.headers?.authorization?.split(" ")[1];
     /**
      * we can have two types of tokens -
      * 1. customer created by us
@@ -22,7 +22,7 @@ const auth = async (req, res, next) => {
       req.userId = decodedData?.id;
     } else {
       // decode the jwt without a secret
-      decodedData = jwt.verify(token);
+      decodedData = jwt.decode(token);
 
       // 'sub' is the ID equivalent of google users
       req.userId = decodedData?.sub;

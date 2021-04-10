@@ -10,10 +10,10 @@ const API = axios.create({
 
 // adding interceptor that will add the token in the auth header for each request
 API.interceptors.request.use((req) => {
-  const profile = localStorage.getItem("profile");
-  const token = profile.token;
+  const profile = JSON.parse(localStorage.getItem("profile"));
+  const token = profile?.token;
 
-  if (profile) {
+  if (token) {
     req.headers.Authorization = `Bearer ${token}`;
   }
 
