@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import memories from "../../images/memories.png";
 import useStyles from "./styles";
@@ -10,15 +10,17 @@ const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
+  // resets the user once the location, i.e. the current path in the app, changes from root to auth or vice-versa
   useEffect(() => {
     const token = user?.token;
 
     // TODO: use JWT later
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, []);
+  }, [location]);
 
   // function to logout the user
   const logout = () => {
