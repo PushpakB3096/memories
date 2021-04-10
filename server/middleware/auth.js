@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
     /**
      * we can have two types of tokens -
      * 1. customer created by us
@@ -11,7 +11,7 @@ const auth = async (req, res, next) => {
      * The token provided by Google auth has the length greater than 500.
      * That is not the case when the token is created by us.
      */
-    const isCustomToken = token.length < 500;
+    const isCustomToken = token?.length < 500;
 
     let decodedData;
 
