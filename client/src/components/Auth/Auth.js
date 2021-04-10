@@ -18,6 +18,14 @@ import Input from "./Input";
 import Icon from "./icon";
 import { AUTH } from "../../constants/actionTypes";
 
+const initialFormState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -25,13 +33,26 @@ const Auth = () => {
 
   // state to handle whether to show password or not
   const [showPassword, setShowPassword] = useState(false);
-  const [isSignup, setIsSignup] = useState(true);
+  const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialFormState);
 
   // function that will submit the form
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    // prevents submission of the form by the browser
+    e.preventDefault();
+
+    if (isSignup) {
+      // dispatch(signup(formData, history));
+    } else {
+      // dispatch(signin(formData, history));
+    }
+  };
 
   // function that will handle input
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    // set the formData equal to the values it already has then change one particular field based on the name
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   // this function toggle between hiding and showing the password
   const handleShowPassword = () =>
@@ -90,14 +111,14 @@ const Auth = () => {
                 <Input
                   name="firstName"
                   label="First Name"
-                  onChange={handleChange}
+                  handleChange={handleChange}
                   autoFocus
                   half
                 />
                 <Input
                   name="lastName"
                   label="Last Name"
-                  onChange={handleChange}
+                  handleChange={handleChange}
                   half
                 />
               </>
@@ -107,7 +128,7 @@ const Auth = () => {
               name="email"
               label="Email Address"
               type="email"
-              onChange={handleChange}
+              handleChange={handleChange}
             />
             <Input
               name="password"
@@ -115,7 +136,7 @@ const Auth = () => {
               // only show the password if user wants to
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
-              onChange={handleChange}
+              handleChange={handleChange}
             />
             {/* below block only applicable in case of new user registration */}
             {isSignup && (
@@ -123,7 +144,7 @@ const Auth = () => {
                 name="confirmPassword"
                 label="Repeat Password"
                 type="password"
-                onChange={handleChange}
+                handleChange={handleChange}
               />
             )}
           </Grid>
