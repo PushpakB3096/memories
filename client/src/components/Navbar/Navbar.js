@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 import memories from "../../images/memories.png";
 import useStyles from "./styles";
 import { LOGOUT } from "../../constants/actionTypes";
@@ -18,7 +19,19 @@ const Navbar = () => {
   useEffect(() => {
     const token = user?.token;
 
-    // TODO: use JWT later
+    /**
+     * decode() function takes the token and destructures it.
+     * decodedToken.exp will have the time of expiry of the token in ms.
+     */
+    const decodedToken = decode(token);
+    const expTimeInSecs = decodedToken.exp * 1000;
+    const currTimeInSecs = new Date().getTime();
+
+    // if token has expired, log out the user
+    if (expTimeInSecs < currTimeInSecs) {
+      logout();
+    }
+
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
