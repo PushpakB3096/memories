@@ -8,6 +8,18 @@ const API = axios.create({
   baseURL: BACKEND_URL,
 });
 
+// adding interceptor that will add the token in the auth header for each request
+API.interceptors.request.use((req) => {
+  const profile = localStorage.getItem("profile");
+  const token = profile.token;
+
+  if (profile) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return req;
+});
+
 // post related
 export const fetchPosts = () => API.get("/posts");
 export const createPost = (data) => API.post("/posts", data);
