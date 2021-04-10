@@ -17,6 +17,7 @@ import Input from "./Input";
 // google svg icon
 import Icon from "./icon";
 import { AUTH } from "../../constants/actionTypes";
+import { signup, signin } from "../../actions/auth";
 
 const initialFormState = {
   firstName: "",
@@ -42,9 +43,9 @@ const Auth = () => {
     e.preventDefault();
 
     if (isSignup) {
-      // dispatch(signup(formData, history));
+      dispatch(signup(formData, history));
     } else {
-      // dispatch(signin(formData, history));
+      dispatch(signin(formData, history));
     }
   };
 
