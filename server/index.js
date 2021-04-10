@@ -7,12 +7,13 @@ import dotenv from "dotenv";
 
 // all routes go here
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 dotenv.config();
 
 // constants go here
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 // only allow 30mb of file size for images
 app.use(
@@ -33,6 +34,7 @@ app.use(cors());
 
 // registering routes
 app.use("/posts", postRoutes);
+app.use("/users", userRoutes);
 
 // add greetings for deployed API
 app.use("/", (req, res) => {

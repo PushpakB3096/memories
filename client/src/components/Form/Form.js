@@ -12,6 +12,7 @@ const Form = ({ currentId, setCurrentId }) => {
   );
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   // clicked post should be populated in the form
   useEffect(() => {
@@ -20,7 +21,6 @@ const Form = ({ currentId, setCurrentId }) => {
 
   // creating the state that will hold the post data
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -34,9 +34,20 @@ const Form = ({ currentId, setCurrentId }) => {
 
     // if we have an ID then that means that we are trying to edit an existing post. Otherwise, we are creating a new post
     if (currentId) {
-      dispatch(updatePost(currentId, postData));
+      dispatch(
+        updatePost(currentId, {
+          ...postData,
+          name: user?.result?.name,
+        })
+      );
     } else {
-      dispatch(createPost(postData));
+      dispatch(
+        createPost({
+          ...postData,
+          // gets the name of the user from local storage and sends it as the creator of the post
+          name: user?.result?.name,
+        })
+      );
     }
     // clears input when the submit button is clicked
     clear();
@@ -45,7 +56,6 @@ const Form = ({ currentId, setCurrentId }) => {
   // function to handle the clearing of the form
   const clear = () => {
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
@@ -53,6 +63,17 @@ const Form = ({ currentId, setCurrentId }) => {
     });
     setCurrentId(null);
   };
+
+  // if the user is not logged in, then don't allow user to create memories
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Please sign in to create your own memories
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -65,20 +86,6 @@ const Form = ({ currentId, setCurrentId }) => {
         <Typography variant="h6">
           {currentId ? "Editing" : "Creating"} a Memory
         </Typography>
-        {/* input for creator of post */}
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({
-              ...postData,
-              creator: e.target.value,
-            })
-          }
-        />
         {/* input for title of the memory */}
         <TextField
           name="title"

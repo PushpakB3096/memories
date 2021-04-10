@@ -1,14 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import decode from "jwt-decode";
 import memories from "../../images/memories.png";
 import useStyles from "./styles";
+import { LOGOUT } from "../../constants/actionTypes";
 
 const Navbar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
 
-  // dummy user for testing
-  const user = null;
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+
+  // resets the user once the location, i.e. the current path in the app, changes from root to auth or vice-versa
+  useEffect(() => {
+    const token = user?.token;
+
+    /**
+     * decode() function takes the token and destructures it.
+     * decodedToken.exp will have the time of expiry of the token in ms.
+     */
+    const decodedToken = decode(token);
+    const expTimeInSecs = decodedToken.exp * 1000;
+    const currTimeInSecs = new Date().getTime();
+
+    // if token has expired, log out the user
+    if (expTimeInSecs < currTimeInSecs) {
+      logout();
+    }
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
+
+  // function to logout the user
+  const logout = () => {
+    dispatch({
+      type: LOGOUT,
+    });
+
+    // redirect user to home page upon logging out
+    history.push("/");
+
+    // clears the current user
+    setUser(null);
+  };
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -47,12 +85,18 @@ const Navbar = () => {
               variant="contained"
               className={classes.logout}
               color="secondary"
+              onClick={logout}
             >
               Logout
             </Button>
           </div>
         ) : (
-          <Button component={Link} to="/" variant="contained" color="primary">
+          <Button
+            component={Link}
+            to="/auth"
+            variant="contained"
+            color="primary"
+          >
             Sign in
           </Button>
         )}
