@@ -16,6 +16,7 @@ import useStyles from "./styles";
 import Input from "./Input";
 // google svg icon
 import Icon from "./icon";
+import { AUTH } from "../../constants/actionTypes";
 
 const Auth = () => {
   const classes = useStyles();
@@ -50,7 +51,7 @@ const Auth = () => {
 
     try {
       dispatch({
-        type: "AUTH",
+        type: AUTH,
         data: {
           result,
           token,

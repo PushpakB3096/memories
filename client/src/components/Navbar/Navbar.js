@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import memories from "../../images/memories.png";
 import useStyles from "./styles";
+import { LOGOUT } from "../../constants/actionTypes";
 
 const Navbar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   useEffect(() => {
@@ -14,6 +19,19 @@ const Navbar = () => {
     // TODO: use JWT later
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
+
+  // function to logout the user
+  const logout = () => {
+    dispatch({
+      type: LOGOUT,
+    });
+
+    // redirect user to home page upon logging out
+    history.push("/");
+
+    // clears the current user
+    setUser(null);
+  };
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -52,6 +70,7 @@ const Navbar = () => {
               variant="contained"
               className={classes.logout}
               color="secondary"
+              onClick={logout}
             >
               Logout
             </Button>
