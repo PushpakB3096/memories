@@ -1,8 +1,7 @@
 import axios from "axios";
 
 // API is deployed on Heroku
-// const BACKEND_URL = "https://pb-memories-api.herokuapp.com/posts";
-const BACKEND_URL = "http://localhost:8080";
+const BACKEND_URL = "https://pb-memories-api.herokuapp.com/";
 
 const API = axios.create({
   baseURL: BACKEND_URL,

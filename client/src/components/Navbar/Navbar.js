@@ -18,18 +18,19 @@ const Navbar = () => {
   // resets the user once the location, i.e. the current path in the app, changes from root to auth or vice-versa
   useEffect(() => {
     const token = user?.token;
-
     /**
      * decode() function takes the token and destructures it.
      * decodedToken.exp will have the time of expiry of the token in ms.
      */
-    const decodedToken = decode(token);
-    const expTimeInSecs = decodedToken.exp * 1000;
-    const currTimeInSecs = new Date().getTime();
+    if (token) {
+      const decodedToken = token && decode(token);
+      const expTimeInSecs = decodedToken?.exp * 1000;
+      const currTimeInSecs = new Date().getTime();
 
-    // if token has expired, log out the user
-    if (expTimeInSecs < currTimeInSecs) {
-      logout();
+      // if token has expired, log out the user
+      if (expTimeInSecs < currTimeInSecs) {
+        logout();
+      }
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
