@@ -25,7 +25,7 @@ const Input = ({
         autoFocus={autoFocus}
         type={type}
         // inputProps only applicable for password field in order to show the password on click
-        inputProps={
+        InputProps={
           name === "password"
             ? {
                 endAdornment: (
