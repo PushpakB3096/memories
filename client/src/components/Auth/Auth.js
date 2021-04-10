@@ -10,6 +10,7 @@ import {
 import { GoogleLogin } from "react-google-login";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import useStyles from "./styles";
 import Input from "./Input";
@@ -19,6 +20,7 @@ import Icon from "./icon";
 const Auth = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // state to handle whether to show password or not
   const [showPassword, setShowPassword] = useState(false);
@@ -54,6 +56,8 @@ const Auth = () => {
           token,
         },
       });
+      // after action is dispatched, redirect user back to home page
+      history.push("/");
     } catch (error) {
       console.error(error);
     }
