@@ -30,7 +30,7 @@ const auth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error(error);
+    console.error(`Error in auth middleware: ${error}`);
   }
 };
 

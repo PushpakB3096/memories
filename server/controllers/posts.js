@@ -82,7 +82,7 @@ export const likePost = async (req, res) => {
   const { id: _id } = req.params;
 
   // check if the user is logged in
-  if (req.userId) {
+  if (!req.userId) {
     return res.status(401).json({
       message: "You do not have authorization to perform this action",
     });
@@ -107,7 +107,7 @@ export const likePost = async (req, res) => {
   if (index === -1) {
     post.likes.push(req.userId);
   } else {
-    post.likes.filter((id) => id !== String(req.userId));
+    post.likes = post.likes.filter((id) => id !== String(req.userId));
   }
 
   const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {
