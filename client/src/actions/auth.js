@@ -4,7 +4,9 @@ import * as api from "../api/index.js";
 // action to sign in the user
 export const signin = (formData, history) => async (dispatch) => {
   try {
-    // TODO: log in the user
+    const { data } = await api.signIn(formData);
+
+    dispatch({ type: AUTH, data });
 
     // redirects the user back to home page
     history.push("/");
@@ -16,7 +18,9 @@ export const signin = (formData, history) => async (dispatch) => {
 // action to register a new user
 export const signup = (formData, history) => async (dispatch) => {
   try {
-    // TODO: registers a new user
+    const { data } = await api.signUp(formData);
+
+    dispatch({ type: AUTH, data });
 
     // redirects the user back to home page
     history.push("/");
