@@ -8,6 +8,7 @@ Memories is a simple social media application that allows users to post interest
 * React
 * Redux
 * Material UI
+* Authentication using Google OAuth
 * Node.js
 * Express
 * MongoDB
