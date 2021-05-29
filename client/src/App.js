@@ -7,6 +7,9 @@ import Auth from "./components/Auth/Auth.js";
 import PostDetails from "./components/PostDetails/PostDetails.jsx";
 
 const App = () => {
+  // gets the current logged in user
+  const user = JSON.parse(localStorage.getItem("profile"));
+
   return (
     <BrowserRouter>
       <Container maxWidth='xl'>
@@ -15,7 +18,14 @@ const App = () => {
           <Route component={() => <Redirect to='/posts' />} path='/' exact />
           <Route component={Home} path='/posts' exact />
           <Route component={PostDetails} path='/posts/:id' exact />
-          <Route component={Auth} path='/auth' exact />
+          <Route
+            component={() => {
+              // the user shouldn't be allowed to go the authentication page if they are already logged in
+              user ? <Redirect to='/posts' /> : <Auth />;
+            }}
+            path='/auth'
+            exact
+          />
         </Switch>
       </Container>
     </BrowserRouter>
