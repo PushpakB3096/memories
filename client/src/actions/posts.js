@@ -9,9 +9,10 @@ import {
 import * as api from "../api/index.js";
 
 // action to get all the posts
-export const getPosts = () => async dispatch => {
+export const getPosts = page => async dispatch => {
   try {
-    const { data } = await api.fetchPosts();
+    const { data, numberOfPages, currentPage } = await api.fetchPosts(page);
+
     // dispatch action that sets the posts received to the store
     dispatch({
       type: FETCH_ALL,

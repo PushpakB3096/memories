@@ -40,11 +40,6 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
 
-  // refetch all the posts when the current ID changes
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch, currentId]);
-
   // this will search the memories for the query that the user entered
   const handleKeyPress = e => {
     /* 
@@ -122,7 +117,7 @@ const Home = () => {
             </AppBar>
             <Form setCurrentId={setCurrentId} currentId={currentId} />
             <Paper elevation={6}>
-              <Paginate />
+              <Paginate page={page} />
             </Paper>
           </Grid>
         </Grid>

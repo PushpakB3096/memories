@@ -6,11 +6,11 @@ import { Grid, CircularProgress } from "@material-ui/core";
 
 const Posts = ({ setCurrentId }) => {
   // getting all the posts from the store
-  const posts = useSelector(state => state.posts);
+  const { posts } = useSelector(state => state.posts);
   const classes = useStyles();
 
   // if the length of the posts array is 0, then show a circular progress bar. Otherwise show the grid of posts
-  return !posts.length ? (
+  return !posts?.length ? (
     <CircularProgress />
   ) : (
     <Grid

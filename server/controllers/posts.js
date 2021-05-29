@@ -3,9 +3,33 @@ import mongoose from "mongoose";
 
 // controller to fetch all the posts
 export const getPosts = async (req, res) => {
+  const { page } = req.query;
+
+  // limit is the post per page we want to show
+  const limit = 2;
+  // start index of the post on each page
+  const startIndex = (parseInt(page) - 1) * limit;
+
   try {
-    const postMessages = await PostMessage.find();
-    res.status(200).json(postMessages);
+    // gets the total number of posts that we have
+    const total = await PostMessage.countDocuments({});
+
+    /* 
+      First  sort the posts based on how new it is. Newest comes first.
+      Then, limit the results only to the number of posts we want to show per page.
+      Then, skip the first x posts based on the page we are on. For eg. 2nd page will
+      not show all 16 posts. It should skip the first 8. This is server side pagination.
+    */
+    const posts = await PostMessage.find()
+      .sort({ _id: "desc" })
+      .limit(limit)
+      .skip(startIndex);
+
+    res.status(200).json({
+      data: posts,
+      currentPage: parseInt(page),
+      numberOfPages: Math.ceil(total / limit)
+    });
   } catch (error) {
     res.status(404).json({
       message: error.message
