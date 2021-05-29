@@ -62,7 +62,8 @@ const Home = () => {
 
   // function that will trigger a search of the memories
   const searchPosts = () => {
-    if (search.trim()) {
+    // only search when the search box is not empty or when there are tags
+    if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
     } else {
       // if the search term is empty and the user clicks on the button, redirect user to the home page
