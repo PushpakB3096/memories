@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grow, Grid } from "@material-ui/core";
+import { Container, Grow, Grid, Paper } from "@material-ui/core";
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
+import Paginate from "../Paginate";
+
 // related to redux
 import { useDispatch } from "react-redux";
 import { getPosts } from "../../actions/posts";
@@ -24,8 +26,8 @@ const Home = () => {
         <Grid
           className={classes.mainContainer}
           container
-          justify="space-between"
-          alignItems="stretch"
+          justify='space-between'
+          alignItems='stretch'
           spacing={3}
         >
           <Grid item xs={12} sm={7}>
@@ -33,6 +35,9 @@ const Home = () => {
           </Grid>
           <Grid item xs={12} sm={4}>
             <Form setCurrentId={setCurrentId} currentId={currentId} />
+            <Paper elevation={6}>
+              <Paginate />
+            </Paper>
           </Grid>
         </Grid>
       </Container>
