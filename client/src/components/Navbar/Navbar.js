@@ -3,7 +3,8 @@ import { AppBar, Typography, Toolbar, Avatar, Button } from "@material-ui/core";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
-import memories from "../../images/memories.png";
+import memoriesLogo from "../../images/memoriesLogo.png";
+import memoriesText from "../../images/memoriesText.png";
 import useStyles from "./styles";
 import { LOGOUT } from "../../constants/actionTypes";
 
@@ -39,7 +40,7 @@ const Navbar = () => {
   // function to logout the user
   const logout = () => {
     dispatch({
-      type: LOGOUT,
+      type: LOGOUT
     });
 
     // redirect user to home page upon logging out
@@ -50,24 +51,16 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar className={classes.appBar} position="static" color="inherit">
-      <div className={classes.brandContainer}>
-        <Typography
-          component={Link}
-          to="/"
-          className={classes.heading}
-          variant="h2"
-          align="center"
-        >
-          Memories
-        </Typography>
+    <AppBar className={classes.appBar} position='static' color='inherit'>
+      <Link to='/' className={classes.brandContainer}>
+        <img src={memoriesText} alt='text' height='45px' />
         <img
           className={classes.image}
-          src={memories}
-          height="60"
-          alt="memories"
+          src={memoriesLogo}
+          height='40px'
+          alt='icon'
         />
-      </div>
+      </Link>
       <Toolbar className={classes.toolbar}>
         {user ? (
           <div className={classes.profile}>
@@ -79,13 +72,13 @@ const Navbar = () => {
               {/* show the first letter of the name as profile picture */}
               {user.result.name.charAt(0)}
             </Avatar>
-            <Typography className={classes.userName} variant="h6">
+            <Typography className={classes.userName} variant='h6'>
               {user.result.name}
             </Typography>
             <Button
-              variant="contained"
+              variant='contained'
               className={classes.logout}
-              color="secondary"
+              color='secondary'
               onClick={logout}
             >
               Logout
@@ -94,9 +87,9 @@ const Navbar = () => {
         ) : (
           <Button
             component={Link}
-            to="/auth"
-            variant="contained"
-            color="primary"
+            to='/auth'
+            variant='contained'
+            color='primary'
           >
             Sign in
           </Button>

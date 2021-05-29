@@ -6,7 +6,7 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
@@ -25,10 +25,10 @@ const Post = ({ post, setCurrentId }) => {
   const Likes = () => {
     if (post.likes.length > 0) {
       return post.likes.find(
-        (like) => like === (user?.result?.googleId || user?.result?._id)
+        like => like === (user?.result?.googleId || user?.result?._id)
       ) ? (
         <>
-          <ThumbUpAltIcon fontSize="small" />
+          <ThumbUpAltIcon fontSize='small' />
           &nbsp;
           {post.likes.length > 1
             ? `You and ${post.likes.length - 1} others`
@@ -36,7 +36,7 @@ const Post = ({ post, setCurrentId }) => {
         </>
       ) : (
         <>
-          <ThumbUpAltOutlined fontSize="small" />
+          <ThumbUpAltOutlined fontSize='small' />
           &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
         </>
       );
@@ -44,14 +44,14 @@ const Post = ({ post, setCurrentId }) => {
 
     return (
       <>
-        <ThumbUpAltOutlined fontSize="small" />
+        <ThumbUpAltOutlined fontSize='small' />
         &nbsp;Like
       </>
     );
   };
 
   return (
-    <Card className={classes.card}>
+    <Card className={classes.card} raised elevation={6}>
       {/* memory image goes here */}
       <CardMedia
         className={classes.media}
@@ -59,9 +59,9 @@ const Post = ({ post, setCurrentId }) => {
         title={post.title}
       />
       <div className={classes.overlay}>
-        <Typography variant="h6">{post.name}</Typography>
+        <Typography variant='h6'>{post.name}</Typography>
         {/* displays relative time eg. 5 hours ago */}
-        <Typography variant="body2">
+        <Typography variant='body2'>
           {moment(post.createdAt).fromNow()}
         </Typography>
       </div>
@@ -71,36 +71,36 @@ const Post = ({ post, setCurrentId }) => {
           {/* this button will display more actions */}
           <Button
             style={{ color: "white" }}
-            size="small"
+            size='small'
             onClick={() => {
               setCurrentId(post._id);
             }}
           >
-            <MoreHorizIcon fontSize="default" />
+            <MoreHorizIcon fontSize='default' />
           </Button>
         </div>
       )}
       {/* div to show tags */}
       <div className={classes.details}>
-        <Typography variant="body2" color="textSecondary">
-          {post.tags.map((tag) => `#${tag} `)}
+        <Typography variant='body2' color='textSecondary'>
+          {post.tags.map(tag => `#${tag} `)}
         </Typography>
       </div>
       {/* for displaying the post title */}
-      <Typography className={classes.title} variant="h5" gutterBottom>
+      <Typography className={classes.title} variant='h5' gutterBottom>
         {post.title}
       </Typography>
       {/* this will display the title of the memory */}
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant='body2' color='textSecondary' component='p'>
           {post.message}
         </Typography>
       </CardContent>
       {/* shows the like and delete button */}
       <CardActions className={classes.cardActions}>
         <Button
-          size="small"
-          color="primary"
+          size='small'
+          color='primary'
           disabled={!user?.result}
           onClick={() => dispatch(likePost(post._id))}
         >
@@ -109,11 +109,11 @@ const Post = ({ post, setCurrentId }) => {
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
           <Button
-            size="small"
-            color="primary"
+            size='small'
+            color='primary'
             onClick={() => dispatch(deletePost(post._id))}
           >
-            <DeleteIcon fontSize="small" />
+            <DeleteIcon fontSize='small' />
             Delete
           </Button>
         )}
