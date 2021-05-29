@@ -23,6 +23,7 @@ const Post = () => {
     dispatch(getPost(id));
   }, [id]);
 
+  // this will search the db for related posts based on the tag
   useEffect(() => {
     if (post) {
       dispatch(
@@ -40,6 +41,9 @@ const Post = () => {
       </Paper>
     );
   }
+
+  // getting all the related posts which are not the current post
+  const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
@@ -65,7 +69,7 @@ const Post = () => {
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
           <Typography variant='body1'>
-            <strong>Comments - coming soon!</strong>
+            <strong>Comments - Might be coming later</strong>
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
         </div>
@@ -81,6 +85,38 @@ const Post = () => {
         </div>
       </div>
       {/* Recommended posts sections goes here */}
+      {recommendedPosts.length && (
+        <div className={classes.section}>
+          <Typography variant='h5' gutterBottom>
+            You might also be interested in:
+          </Typography>
+          <Divider />
+          <div className={classes.recommendedPosts}>
+            {recommendedPosts.map(
+              ({ title, message, name, likes, selectedFile, _id }) => (
+                <div
+                  style={{ margin: "20px", cursor: "pointer" }}
+                  onClick={() => history.push(`/posts/${_id}`)}
+                >
+                  <Typography variant='h6' gutterBottom>
+                    {title}
+                  </Typography>
+                  <Typography variant='subtitle2' gutterBottom>
+                    {name}
+                  </Typography>
+                  <Typography variant='subtitle2' gutterBottom>
+                    {message}
+                  </Typography>
+                  <Typography variant='subtitle1' gutterBottom>
+                    Likes: {likes.length}
+                  </Typography>
+                  <img src={selectedFile} width='200px' />
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </Paper>
   );
 };

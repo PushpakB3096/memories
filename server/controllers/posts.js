@@ -21,7 +21,7 @@ export const getPosts = async (req, res) => {
   const { page } = req.query;
 
   // limit is the post per page we want to show
-  const limit = 2;
+  const limit = 8;
   // start index of the post on each page
   const startIndex = (parseInt(page) - 1) * limit;
 
