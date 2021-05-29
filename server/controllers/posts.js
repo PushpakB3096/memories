@@ -1,6 +1,21 @@
 import PostMessage from "../models/postMessage.js";
 import mongoose from "mongoose";
 
+// controller to fetch a single post
+export const getPost = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const post = await PostMessage.findById(id);
+
+    res.status(200).json(post);
+  } catch (err) {
+    res.status(404).json({
+      message: err.message
+    });
+  }
+};
+
 // controller to fetch all the posts
 export const getPosts = async (req, res) => {
   const { page } = req.query;
