@@ -4,11 +4,17 @@ import {
   CREATE,
   UPDATE,
   DELETE,
-  LIKE_POST
+  LIKE_POST,
+  START_LOADING,
+  END_LOADING
 } from "../constants/actionTypes";
 
-const postReducer = (state = [], action) => {
+const postReducer = (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
+    case START_LOADING:
+      return { ...state, isLoading: true };
+    case END_LOADING:
+      return { ...state, isLoading: false };
     case FETCH_ALL:
       return {
         ...state,
@@ -26,12 +32,18 @@ const postReducer = (state = [], action) => {
     case LIKE_POST:
     case UPDATE:
       // find the post which was just updated and return the updated post. For others, return the post as it is
-      return state.map(post =>
-        post._id === action.payload._id ? action.payload : post
-      );
+      return {
+        ...state,
+        posts: state.posts.map(post =>
+          post._id === action.payload._id ? action.payload : post
+        )
+      };
     case DELETE:
       // take everything but the post with ID we want to delete
-      return state.filter(post => post._id !== action.payload);
+      return {
+        ...state,
+        posts: state.posts.filter(post => post._id !== action.payload)
+      };
     default:
       return state;
   }

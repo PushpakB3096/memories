@@ -4,19 +4,31 @@ import {
   CREATE,
   UPDATE,
   DELETE,
-  LIKE_POST
+  LIKE_POST,
+  START_LOADING,
+  END_LOADING
 } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
 // action to get all the posts
 export const getPosts = page => async dispatch => {
   try {
-    const { data, numberOfPages, currentPage } = await api.fetchPosts(page);
+    // set loading to true
+    dispatch({
+      type: START_LOADING
+    });
+
+    const { data } = await api.fetchPosts(page);
 
     // dispatch action that sets the posts received to the store
     dispatch({
       type: FETCH_ALL,
       payload: data
+    });
+
+    // set loading to false after data is fetched
+    dispatch({
+      type: END_LOADING
     });
   } catch (error) {
     console.error(error);
@@ -26,6 +38,11 @@ export const getPosts = page => async dispatch => {
 // action to get the posts by a search term
 export const getPostsBySearch = searchQuery => async dispatch => {
   try {
+    // set loading to true
+    dispatch({
+      type: START_LOADING
+    });
+
     const {
       data: { data }
     } = await api.fetchPostsBySearch(searchQuery);
@@ -35,6 +52,11 @@ export const getPostsBySearch = searchQuery => async dispatch => {
       type: FETCH_BY_SEARCH,
       payload: data
     });
+
+    // set loading to false after data is fetched
+    dispatch({
+      type: END_LOADING
+    });
   } catch (error) {
     console.error(error);
   }
@@ -43,11 +65,21 @@ export const getPostsBySearch = searchQuery => async dispatch => {
 // action to create a new post
 export const createPost = post => async dispatch => {
   try {
+    // set loading to true
+    dispatch({
+      type: START_LOADING
+    });
+
     const response = await api.createPost(post);
 
     dispatch({
       type: CREATE,
       payload: response.data
+    });
+
+    // set loading to false after data is fetched
+    dispatch({
+      type: END_LOADING
     });
   } catch (error) {
     console.error(error);
