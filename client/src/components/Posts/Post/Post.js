@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import useStyles from "./styles";
 import {
   Card,
@@ -6,7 +7,8 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Typography
+  Typography,
+  ButtonBase
 } from "@material-ui/core";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
@@ -14,11 +16,14 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import moment from "moment";
 import { useDispatch } from "react-redux";
+
 import { deletePost, likePost } from "../../../actions/posts";
 
 const Post = ({ post, setCurrentId }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const user = JSON.parse(localStorage.getItem("profile"));
 
   // sub-component to show and properly format the number of users who like it
@@ -50,52 +55,58 @@ const Post = ({ post, setCurrentId }) => {
     );
   };
 
+  const openPost = () => {
+    history.push(`/posts/${post._id}`);
+  };
+
   return (
     <Card className={classes.card} raised elevation={6}>
-      {/* memory image goes here */}
-      <CardMedia
-        className={classes.media}
-        image={post.selectedFile}
-        title={post.title}
-      />
-      <div className={classes.overlay}>
-        <Typography variant='h6'>{post.name}</Typography>
-        {/* displays relative time eg. 5 hours ago */}
-        <Typography variant='body2'>
-          {moment(post.createdAt).fromNow()}
-        </Typography>
-      </div>
-      {(user?.result?.googleId === post?.creator ||
-        user?.result?._id === post?.creator) && (
-        <div className={classes.overlay2}>
-          {/* this button will display more actions */}
-          <Button
-            style={{ color: "white" }}
-            size='small'
-            onClick={() => {
-              setCurrentId(post._id);
-            }}
-          >
-            <MoreHorizIcon fontSize='default' />
-          </Button>
+      <ButtonBase className={classes.cardActions} onClick={openPost}>
+        {/* memory image goes here */}
+        <CardMedia
+          className={classes.media}
+          image={post.selectedFile}
+          title={post.title}
+        />
+        <div className={classes.overlay}>
+          <Typography variant='h6'>{post.name}</Typography>
+          {/* displays relative time eg. 5 hours ago */}
+          <Typography variant='body2'>
+            {moment(post.createdAt).fromNow()}
+          </Typography>
         </div>
-      )}
-      {/* div to show tags */}
-      <div className={classes.details}>
-        <Typography variant='body2' color='textSecondary'>
-          {post.tags.map(tag => `#${tag} `)}
+        {(user?.result?.googleId === post?.creator ||
+          user?.result?._id === post?.creator) && (
+          <div className={classes.overlay2}>
+            {/* this button will display more actions */}
+            <Button
+              style={{ color: "white" }}
+              size='small'
+              onClick={() => {
+                setCurrentId(post._id);
+              }}
+            >
+              <MoreHorizIcon fontSize='default' />
+            </Button>
+          </div>
+        )}
+        {/* div to show tags */}
+        <div className={classes.details}>
+          <Typography variant='body2' color='textSecondary'>
+            {post.tags.map(tag => `#${tag} `)}
+          </Typography>
+        </div>
+        {/* for displaying the post title */}
+        <Typography className={classes.title} variant='h5' gutterBottom>
+          {post.title}
         </Typography>
-      </div>
-      {/* for displaying the post title */}
-      <Typography className={classes.title} variant='h5' gutterBottom>
-        {post.title}
-      </Typography>
-      {/* this will display the title of the memory */}
-      <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
-          {post.message}
-        </Typography>
-      </CardContent>
+        {/* this will display the title of the memory */}
+        <CardContent>
+          <Typography variant='body2' color='textSecondary' component='p'>
+            {post.message}
+          </Typography>
+        </CardContent>
+      </ButtonBase>
       {/* shows the like and delete button */}
       <CardActions className={classes.cardActions}>
         <Button

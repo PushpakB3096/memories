@@ -1,5 +1,6 @@
 import {
   FETCH_ALL,
+  FETCH_POST,
   FETCH_BY_SEARCH,
   CREATE,
   UPDATE,
@@ -9,6 +10,31 @@ import {
   END_LOADING
 } from "../constants/actionTypes";
 import * as api from "../api/index.js";
+
+// action to get a post based on ID
+export const getPost = id => async dispatch => {
+  try {
+    // set loading to true
+    dispatch({
+      type: START_LOADING
+    });
+
+    const { data } = await api.fetchPost(id);
+
+    // dispatch action that sets the posts received to the store
+    dispatch({
+      type: FETCH_POST,
+      payload: data
+    });
+
+    // set loading to false after data is fetched
+    dispatch({
+      type: END_LOADING
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // action to get all the posts
 export const getPosts = page => async dispatch => {
