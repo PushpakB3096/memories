@@ -21,7 +21,7 @@ const App = () => {
           <Route
             component={() => {
               // the user shouldn't be allowed to go the authentication page if they are already logged in
-              user ? <Redirect to='/posts' /> : <Auth />;
+              return user ? <Redirect to='/posts' /> : <Auth />;
             }}
             path='/auth'
             exact
