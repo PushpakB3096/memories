@@ -17,6 +17,7 @@ import Paginate from "../Paginate";
 // related to redux
 import { useDispatch } from "react-redux";
 import { getPosts } from "../../actions/posts";
+
 import useStyles from "./styles";
 
 function useQuery() {
@@ -35,6 +36,7 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
 
   const [currentId, setCurrentId] = useState(null);
+  const [search, setSearch] = useState("");
 
   // refetch all the posts when the current ID changes
   useEffect(() => {
@@ -66,8 +68,10 @@ const Home = () => {
                 variant='outlined'
                 label='Search memories'
                 fullWidth
-                value='Test'
-                onChange={() => {}}
+                value={search}
+                onChange={e => {
+                  setSearch(e.target.value);
+                }}
               />
             </AppBar>
             <Form setCurrentId={setCurrentId} currentId={currentId} />
