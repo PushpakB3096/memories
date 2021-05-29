@@ -43,6 +43,17 @@ const Home = () => {
     dispatch(getPosts());
   }, [dispatch, currentId]);
 
+  // this will search the memories for the query that the user entered
+  const handleKeyPress = e => {
+    /* 
+      The 'Enter' key has the key code of 13.
+      We can also use e.key === 'Enter'
+    */
+    if (e.keyCode === 13) {
+      // TODO: search memory
+    }
+  };
+
   return (
     <Grow in>
       <Container maxWidth='xl'>
@@ -72,6 +83,7 @@ const Home = () => {
                 onChange={e => {
                   setSearch(e.target.value);
                 }}
+                onKeyPress={handleKeyPress}
               />
             </AppBar>
             <Form setCurrentId={setCurrentId} currentId={currentId} />
