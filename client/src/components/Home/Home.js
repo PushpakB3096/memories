@@ -37,7 +37,7 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
 
   const [currentId, setCurrentId] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
 
   // refetch all the posts when the current ID changes
@@ -62,14 +62,8 @@ const Home = () => {
 
   // function that will trigger a search of the memories
   const searchPosts = () => {
-    if (searchTerm.trim()) {
-      dispatch(
-        getPostsBySearch({
-          searchQuery,
-          // cannot send an array as query parameter hence need to convert into a string separated by commas
-          tags: tags.join(",")
-        })
-      );
+    if (search.trim()) {
+      dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
     } else {
       // if the search term is empty and the user clicks on the button, redirect user to the home page
       history.push("/");
@@ -101,9 +95,9 @@ const Home = () => {
                 variant='outlined'
                 label='Search memories'
                 fullWidth
-                value={searchTerm}
+                value={search}
                 onChange={e => {
-                  setSearchTerm(e.target.value);
+                  setSearch(e.target.value);
                 }}
                 onKeyPress={handleKeyPress}
               />

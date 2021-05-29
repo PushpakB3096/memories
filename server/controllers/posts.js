@@ -8,7 +8,36 @@ export const getPosts = async (req, res) => {
     res.status(200).json(postMessages);
   } catch (error) {
     res.status(404).json({
-      message: error.message,
+      message: error.message
+    });
+  }
+};
+
+// controller to fetch all the posts by search
+export const getPostsBySearch = async (req, res) => {
+  const { searchQuery, tags } = req.query;
+
+  try {
+    // creates a case-insensitive regex based on our search term
+    const title = new RegExp(searchQuery, "i");
+
+    const posts = await PostMessage.find({
+      $or: [
+        { title },
+        {
+          tags: {
+            $in: tags.split(",")
+          }
+        }
+      ]
+    });
+
+    res.status(200).json({
+      data: posts
+    });
+  } catch (error) {
+    res.status(404).json({
+      message: error.message
     });
   }
 };
@@ -20,7 +49,7 @@ export const createPost = async (req, res) => {
   const newPostMessage = new PostMessage({
     ...post,
     creator: req.userId,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date().toISOString()
   });
 
   try {
@@ -50,7 +79,7 @@ export const updatePost = async (req, res) => {
     { ...post, _id },
     {
       // this will send back the updated post
-      new: true,
+      new: true
     }
   );
 
@@ -71,7 +100,7 @@ export const deletePost = async (req, res) => {
   await PostMessage.findByIdAndRemove(_id);
 
   res.json({
-    message: `Post with ID ${_id} deleted successfully`,
+    message: `Post with ID ${_id} deleted successfully`
   });
 };
 
@@ -84,7 +113,7 @@ export const likePost = async (req, res) => {
   // check if the user is logged in
   if (!req.userId) {
     return res.status(401).json({
-      message: "You do not have authorization to perform this action",
+      message: "You do not have authorization to perform this action"
     });
   }
 
@@ -102,16 +131,16 @@ export const likePost = async (req, res) => {
    * Value of index will not be -1 if the user has already liked the post. In that
    * case, that userId will be removed from the likes array
    */
-  const index = post.likes.findIndex((id) => id === String(req.userId));
+  const index = post.likes.findIndex(id => id === String(req.userId));
 
   if (index === -1) {
     post.likes.push(req.userId);
   } else {
-    post.likes = post.likes.filter((id) => id !== String(req.userId));
+    post.likes = post.likes.filter(id => id !== String(req.userId));
   }
 
   const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {
-    new: true,
+    new: true
   });
 
   res.json(updatedPost);
