@@ -37,7 +37,7 @@ const Home = () => {
   const searchQuery = query.get("searchQuery");
 
   const [currentId, setCurrentId] = useState(null);
-  const [search, setSearch] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [tags, setTags] = useState([]);
 
   // refetch all the posts when the current ID changes
@@ -52,13 +52,23 @@ const Home = () => {
       We can also use e.key === 'Enter'
     */
     if (e.keyCode === 13) {
-      // TODO: search memory
+      searchPosts();
     }
   };
 
   const handleAdd = newTag => setTags([...tags, newTag]);
   const handleDelete = tagToDelete =>
     setTags(tags.filter(tag => tag !== tagToDelete));
+
+  // function that will trigger a search of the memories
+  const searchPosts = () => {
+    if (searchTerm.trim()) {
+      // dispatch a search request
+    } else {
+      // if the search term is empty and the user clicks on the button, redirect user to the home page
+      history.push("/");
+    }
+  };
 
   return (
     <Grow in>
@@ -85,9 +95,9 @@ const Home = () => {
                 variant='outlined'
                 label='Search memories'
                 fullWidth
-                value={search}
+                value={searchTerm}
                 onChange={e => {
-                  setSearch(e.target.value);
+                  setSearchTerm(e.target.value);
                 }}
                 onKeyPress={handleKeyPress}
               />
@@ -99,6 +109,9 @@ const Home = () => {
                 onAdd={handleAdd}
                 onDelete={handleDelete}
               />
+              <Button color='primary' variant='contained' onClick={searchPosts}>
+                Search
+              </Button>
             </AppBar>
             <Form setCurrentId={setCurrentId} currentId={currentId} />
             <Paper elevation={6}>
