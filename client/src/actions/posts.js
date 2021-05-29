@@ -89,18 +89,21 @@ export const getPostsBySearch = searchQuery => async dispatch => {
 };
 
 // action to create a new post
-export const createPost = post => async dispatch => {
+export const createPost = (post, history) => async dispatch => {
   try {
     // set loading to true
     dispatch({
       type: START_LOADING
     });
 
-    const response = await api.createPost(post);
+    const { data } = await api.createPost(post);
+
+    // navigate to the newly created post
+    history.push(`/posts/${data._id}`);
 
     dispatch({
       type: CREATE,
-      payload: response.data
+      payload: data
     });
 
     // set loading to false after data is fetched

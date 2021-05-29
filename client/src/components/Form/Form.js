@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { TextField, Button, Typography, Paper } from "@material-ui/core";
 import FileBase from "react-file-base64";
 import useStyles from "./styles";
@@ -8,10 +9,12 @@ import { createPost, updatePost } from "../../actions/posts";
 const Form = ({ currentId, setCurrentId }) => {
   // if we have a current ID, then that means we are editing a post. In that case, we need to fetch the same post from the state
   const post = useSelector(state =>
-    currentId ? state.posts.find(p => p._id === currentId) : null
+    currentId ? state.posts.posts.find(p => p._id === currentId) : null
   );
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const user = JSON.parse(localStorage.getItem("profile"));
 
   // clicked post should be populated in the form
@@ -42,13 +45,18 @@ const Form = ({ currentId, setCurrentId }) => {
       );
     } else {
       dispatch(
-        createPost({
-          ...postData,
-          // gets the name of the user from local storage and sends it as the creator of the post
-          name: user?.result?.name
-        })
+        createPost(
+          {
+            ...postData,
+            // gets the name of the user from local storage and sends it as the creator of the post
+            name: user?.result?.name
+          },
+          // sending the history obj as well so that we can navigate to the post details page after creating it
+          history
+        )
       );
     }
+
     // clears input when the submit button is clicked
     clear();
   };
