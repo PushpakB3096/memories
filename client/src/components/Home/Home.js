@@ -8,6 +8,7 @@ import {
   TextField,
   Button
 } from "@material-ui/core";
+import ChipInput from "material-ui-chip-input";
 import { useHistory, useLocation } from "react-router-dom";
 
 import Posts from "../Posts/Posts";
@@ -37,6 +38,7 @@ const Home = () => {
 
   const [currentId, setCurrentId] = useState(null);
   const [search, setSearch] = useState("");
+  const [tags, setTags] = useState([]);
 
   // refetch all the posts when the current ID changes
   useEffect(() => {
@@ -53,6 +55,10 @@ const Home = () => {
       // TODO: search memory
     }
   };
+
+  const handleAdd = newTag => setTags([...tags, newTag]);
+  const handleDelete = tagToDelete =>
+    setTags(tags.filter(tag => tag !== tagToDelete));
 
   return (
     <Grow in>
@@ -84,6 +90,14 @@ const Home = () => {
                   setSearch(e.target.value);
                 }}
                 onKeyPress={handleKeyPress}
+              />
+              <ChipInput
+                style={{ margin: "10px 0" }}
+                value={tags}
+                label='Search by tags'
+                variant='outlined'
+                onAdd={handleAdd}
+                onDelete={handleDelete}
               />
             </AppBar>
             <Form setCurrentId={setCurrentId} currentId={currentId} />
