@@ -17,7 +17,7 @@ import Paginate from "../Paginate";
 
 // related to redux
 import { useDispatch } from "react-redux";
-import { getPosts } from "../../actions/posts";
+import { getPosts, getPostsBySearch } from "../../actions/posts";
 
 import useStyles from "./styles";
 
@@ -63,7 +63,13 @@ const Home = () => {
   // function that will trigger a search of the memories
   const searchPosts = () => {
     if (searchTerm.trim()) {
-      // dispatch a search request
+      dispatch(
+        getPostsBySearch({
+          searchQuery,
+          // cannot send an array as query parameter hence need to convert into a string separated by commas
+          tags: tags.join(",")
+        })
+      );
     } else {
       // if the search term is empty and the user clicks on the button, redirect user to the home page
       history.push("/");
@@ -106,7 +112,9 @@ const Home = () => {
                 value={tags}
                 label='Search by tags'
                 variant='outlined'
+                // when user presses enter after typing a tag name
                 onAdd={handleAdd}
+                // when user clicks on cross mark to remove a particular tag
                 onDelete={handleDelete}
               />
               <Button color='primary' variant='contained' onClick={searchPosts}>
