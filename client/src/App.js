@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.js";
 import Home from "./components/Home/Home.js";
 import Auth from "./components/Auth/Auth.js";
+import PostDetails from "./components/PostDetails/PostDetails.jsx";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Switch>
           <Route component={() => <Redirect to='/posts' />} path='/' exact />
           <Route component={Home} path='/posts' exact />
+          <Route component={PostDetails} path='/posts/:id' exact />
           <Route component={Auth} path='/auth' exact />
         </Switch>
       </Container>
