@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grow, Grid, Paper } from "@material-ui/core";
+import {
+  Container,
+  Grow,
+  Grid,
+  Paper,
+  AppBar,
+  TextField,
+  Button
+} from "@material-ui/core";
+import { useHistory, useLocation } from "react-router-dom";
+
 import Posts from "../Posts/Posts";
 import Form from "../Form/Form";
 import Paginate from "../Paginate";
@@ -7,11 +17,22 @@ import Paginate from "../Paginate";
 // related to redux
 import { useDispatch } from "react-redux";
 import { getPosts } from "../../actions/posts";
-import useStyles from "../../styles";
+import useStyles from "./styles";
+
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
 
 const Home = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const query = useQuery();
+  const history = useHistory();
+
+  // if the 'page' query param doesn't exist, use page number as 1
+  const page = query.get("page") || 1;
+  // holds the search tags query
+  const searchQuery = query.get("searchQuery");
 
   const [currentId, setCurrentId] = useState(null);
 
@@ -22,9 +43,9 @@ const Home = () => {
 
   return (
     <Grow in>
-      <Container>
+      <Container maxWidth='xl'>
         <Grid
-          className={classes.mainContainer}
+          className={classes.gridContainer}
           container
           justify='space-between'
           alignItems='stretch'
