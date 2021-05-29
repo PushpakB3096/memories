@@ -17,6 +17,7 @@ const App = () => {
         <Switch>
           <Route component={() => <Redirect to='/posts' />} path='/' exact />
           <Route component={Home} path='/posts' exact />
+          <Route component={Home} path='/posts/search' exact />
           <Route component={PostDetails} path='/posts/:id' exact />
           <Route
             component={() => {

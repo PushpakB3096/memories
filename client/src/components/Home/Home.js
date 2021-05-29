@@ -65,6 +65,10 @@ const Home = () => {
     // only search when the search box is not empty or when there are tags
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
+      // for client side routing
+      history.push(
+        `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
+      );
     } else {
       // if the search term is empty and the user clicks on the button, redirect user to the home page
       history.push("/");
