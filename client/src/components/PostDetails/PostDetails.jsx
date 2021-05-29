@@ -33,8 +33,6 @@ const Post = () => {
 
   if (!post) return null;
 
-  const openPost = _id => history.push(`/posts/${_id}`);
-
   if (isLoading) {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
@@ -42,8 +40,6 @@ const Post = () => {
       </Paper>
     );
   }
-
-  const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
@@ -66,10 +62,6 @@ const Post = () => {
           <Typography variant='h6'>Created by: {post.name}</Typography>
           <Typography variant='body1'>
             {moment(post.createdAt).fromNow()}
-          </Typography>
-          <Divider style={{ margin: "20px 0" }} />
-          <Typography variant='body1'>
-            <strong>Realtime Chat - coming soon!</strong>
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
           <Typography variant='body1'>
