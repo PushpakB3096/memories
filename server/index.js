@@ -15,18 +15,18 @@ dotenv.config();
 // constants go here
 const PORT = process.env.PORT || 8080;
 
-// only allow 30mb of file size for images
+// since we are sending images in the request body, only allow 30mb of file size
 app.use(
   bodyParser.json({
     limit: "30mb",
-    extended: true,
+    extended: true
   })
 );
 
 app.use(
   bodyParser.urlencoded({
     limit: "30mb",
-    extended: true,
+    extended: true
   })
 );
 // allow CORS
@@ -36,20 +36,20 @@ app.use(cors());
 app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 
-// add greetings for deployed API
+// add greetings for deployed API. this is just for testing whether our API works after deployment
 app.use("/", (req, res) => {
   res.send("Welcome to Memories API by Pushpak Bhattacharya");
 });
 
-// connect to mongoose
+// connect to mongo atlas instance
 mongoose
   .connect(process.env.CONNECTION_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(() => {
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   })
-  .catch((error) => console.error(error.message));
+  .catch(error => console.error(error.message));
 
 mongoose.set("useFindAndModify", false);

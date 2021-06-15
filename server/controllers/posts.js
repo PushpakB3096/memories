@@ -30,7 +30,7 @@ export const getPosts = async (req, res) => {
     const total = await PostMessage.countDocuments({});
 
     /* 
-      First  sort the posts based on how new it is. Newest comes first.
+      First, sort the posts based on how new it is. Newest comes first. Hence, sort in descending order.
       Then, limit the results only to the number of posts we want to show per page.
       Then, skip the first x posts based on the page we are on. For eg. 2nd page will
       not show all 16 posts. It should skip the first 8. This is server side pagination.
@@ -168,7 +168,7 @@ export const likePost = async (req, res) => {
    * Value of 'index' will be -1 if the user has not liked the post. In that case,
    * we want to add the userId to the likes array.
    * Value of index will not be -1 if the user has already liked the post. In that
-   * case, that userId will be removed from the likes array
+   * case, that userId will be removed from the likes array, essentially unliking the post.
    */
   const index = post.likes.findIndex(id => id === String(req.userId));
 

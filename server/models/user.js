@@ -1,21 +1,22 @@
 import mongoose from "mongoose";
 
+// defining a schema for how a user will look like
 const userSchema = mongoose.Schema({
   id: {
-    type: String,
+    type: String
   },
   name: {
     type: String,
-    required: true,
+    required: true
   },
   email: {
     type: String,
-    required: true,
+    required: true
   },
   password: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 export default mongoose.model("User", userSchema);

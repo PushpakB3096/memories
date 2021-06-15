@@ -10,12 +10,12 @@ const postSchema = mongoose.Schema({
   selectedFile: String,
   likes: {
     type: [String],
-    default: [],
+    default: []
   },
   createdAt: {
     type: Date,
-    default: new Date(),
-  },
+    default: new Date()
+  }
 });
 
 // creating a model from the schema
