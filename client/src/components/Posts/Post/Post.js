@@ -77,7 +77,10 @@ const Post = ({ post, setCurrentId }) => {
           title={post.title}
         />
         <div className={classes.overlay}>
-          <Typography variant='h6'>{post.name}</Typography>
+          <Typography variant='h6'>
+            {/* hide the overflow of name with ellipses */}
+            {post.name.length > 15 ? `${post.name.slice(0, 15)}...` : post.name}
+          </Typography>
           {/* displays relative time eg. 5 hours ago */}
           <Typography variant='body2'>
             {moment(post.createdAt).fromNow()}
