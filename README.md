@@ -39,3 +39,9 @@ Go to the _server_ folder and create a _.env_ file with the following keys,
 | -------------- | ------------------------------- |
 | CONNECTION_URI | your-mongo-atlas-connection-uri |
 | SECRET         | any-string-here                 |
+
+If you want to test out functionality, use the following demo credentials,
+
+| Email         | Password |
+| ------------- | -------- |
+| demo@demo.com | demo123  |
