@@ -21,7 +21,7 @@ const App = () => {
           <Route component={PostDetails} path='/posts/:id' exact />
           <Route
             component={() => {
-              // the user shouldn't be allowed to go the authentication page if they are already logged in
+              // the user shouldn't be allowed to go the authentication page if they are already logged in. hence this is kind of like a navguard
               return user ? <Redirect to='/posts' /> : <Auth />;
             }}
             path='/auth'

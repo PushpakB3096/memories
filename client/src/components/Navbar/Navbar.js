@@ -16,11 +16,11 @@ const Navbar = () => {
 
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-  // resets the user once the location, i.e. the current path in the app, changes from root to auth or vice-versa
+  // resets the user (and logs them out, if token is expired) once the location, i.e. the current path in the app, changes from root to auth or vice-versa
   useEffect(() => {
     const token = user?.token;
-    /**
-     * decode() function takes the token and destructures it.
+    /*
+     * decode() function takes the token and destructures the data.
      * decodedToken.exp will have the time of expiry of the token in ms.
      */
     if (token) {
@@ -43,11 +43,11 @@ const Navbar = () => {
       type: LOGOUT
     });
 
-    // redirect user to home page upon logging out
-    history.push("/");
-
     // clears the current user
     setUser(null);
+
+    // redirect user to home page upon logging out
+    history.push("/");
   };
 
   return (

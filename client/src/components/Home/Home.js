@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Container,
   Grow,
@@ -17,7 +17,7 @@ import Paginate from "../Paginate";
 
 // related to redux
 import { useDispatch } from "react-redux";
-import { getPosts, getPostsBySearch } from "../../actions/posts";
+import { getPostsBySearch } from "../../actions/posts";
 
 import useStyles from "./styles";
 
@@ -58,14 +58,14 @@ const Home = () => {
   // function that will trigger a search of the memories
   const searchPosts = () => {
     // only search when the search box is not empty or when there are tags
-    if (search.trim() || tags) {
+    if (search.trim() || tags.length) {
       dispatch(getPostsBySearch({ search, tags: tags.join(",") }));
       // for client side routing
       history.push(
         `/posts/search?searchQuery=${search || "none"}&tags=${tags.join(",")}`
       );
     } else {
-      // if the search term is empty and the user clicks on the button, redirect user to the home page
+      // if the search term is empty or there are no tags and the user clicks on the button, redirect user to the home page
       history.push("/");
     }
   };

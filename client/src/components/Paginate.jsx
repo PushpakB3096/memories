@@ -22,19 +22,19 @@ const Paginate = ({ page }) => {
   return (
     <Pagination
       classes={{ ul: classes.ul }}
-      // TODO: make count and page dynamic
       count={numberOfPages}
       page={parseInt(page) || 1}
       variant='outlined'
       color='primary'
-      renderItem={item => (
-        // TODO: make the page number dynamic
-        <PaginationItem
-          {...item}
-          component={Link}
-          to={`/posts?page=${item.page}`}
-        />
-      )}
+      renderItem={item => {
+        return (
+          <PaginationItem
+            {...item}
+            component={Link}
+            to={`/posts?page=${item.page}`}
+          />
+        );
+      }}
     />
   );
 };

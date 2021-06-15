@@ -30,7 +30,7 @@ const Form = ({ currentId, setCurrentId }) => {
     selectedFile: ""
   });
 
-  // function to handle the submit of this form
+  // function to handle the submission of this form
   const handleSubmit = e => {
     // to prevent browser refresh
     e.preventDefault();
@@ -40,6 +40,7 @@ const Form = ({ currentId, setCurrentId }) => {
       dispatch(
         updatePost(currentId, {
           ...postData,
+          // gets the name of the user from local storage and sends it as the creator of the post
           name: user?.result?.name
         })
       );
@@ -72,7 +73,7 @@ const Form = ({ currentId, setCurrentId }) => {
     setCurrentId(null);
   };
 
-  // if the user is not logged in, then don't allow user to create memories
+  // if the user is not logged in, then don't allow user to create/update memories
   if (!user?.result?.name) {
     return (
       <Paper className={classes.paper}>
@@ -108,7 +109,7 @@ const Form = ({ currentId, setCurrentId }) => {
             })
           }
         />
-        {/* input for a message */}
+        {/* input for the message of the memory */}
         <TextField
           name='message'
           variant='outlined'

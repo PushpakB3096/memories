@@ -5,7 +5,7 @@ import {
   Paper,
   Grid,
   Typography,
-  Container,
+  Container
 } from "@material-ui/core";
 import { GoogleLogin } from "react-google-login";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -24,7 +24,7 @@ const initialFormState = {
   lastName: "",
   email: "",
   password: "",
-  confirmPassword: "",
+  confirmPassword: ""
 };
 
 const Auth = () => {
@@ -38,7 +38,7 @@ const Auth = () => {
   const [formData, setFormData] = useState(initialFormState);
 
   // function that will submit the form
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     // prevents submission of the form by the browser
     e.preventDefault();
 
@@ -50,24 +50,24 @@ const Auth = () => {
   };
 
   // function that will handle input
-  const handleChange = (e) => {
+  const handleChange = e => {
     // set the formData equal to the values it already has then change one particular field based on the name
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // this function toggle between hiding and showing the password
   const handleShowPassword = () =>
-    setShowPassword((prevShowPassword) => !prevShowPassword);
+    setShowPassword(prevShowPassword => !prevShowPassword);
 
   // this function will switch between login or registration modes
   const switchMode = () => {
-    setIsSignup((prevIsSignUp) => !prevIsSignUp);
+    setIsSignup(prevIsSignUp => !prevIsSignUp);
     // on switching between modes, hide the password field again
     setShowPassword(false);
   };
 
   // function to handle when user has successfully logged in using google auth
-  const googleSuccess = async (res) => {
+  const googleSuccess = async res => {
     const result = res?.profileObj;
     const token = res?.tokenId;
 
@@ -76,8 +76,8 @@ const Auth = () => {
         type: AUTH,
         data: {
           result,
-          token,
-        },
+          token
+        }
       });
       // after action is dispatched, redirect user back to home page
       history.push("/");
@@ -87,7 +87,7 @@ const Auth = () => {
   };
 
   // function to handle when user failed to log in using google auth
-  const googleFailure = (error) => {
+  const googleFailure = error => {
     console.error(
       "Logging in using Google was unsuccessful. Please try again.",
       error
@@ -95,30 +95,30 @@ const Auth = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component='main' maxWidth='xs'>
       {/* this displays a white background with a bit of elevation */}
       <Paper className={classes.paper} elevation={5}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography variant="h5">
+        <Typography variant='h5'>
           {isSignup ? "Register" : "Sign in"}
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={3}>
-            {/* the below block will show fields related to user registration */}
+            {/* the below block will show fields related to new user registration */}
             {isSignup && (
               <>
                 <Input
-                  name="firstName"
-                  label="First Name"
+                  name='firstName'
+                  label='First Name'
                   handleChange={handleChange}
                   autoFocus
                   half
                 />
                 <Input
-                  name="lastName"
-                  label="Last Name"
+                  name='lastName'
+                  label='Last Name'
                   handleChange={handleChange}
                   half
                 />
@@ -126,14 +126,14 @@ const Auth = () => {
             )}
             {/* Below inputs are for both new and existing users */}
             <Input
-              name="email"
-              label="Email Address"
-              type="email"
+              name='email'
+              label='Email Address'
+              type='email'
               handleChange={handleChange}
             />
             <Input
-              name="password"
-              label="Password"
+              name='password'
+              label='Password'
               // only show the password if user wants to
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
@@ -142,44 +142,45 @@ const Auth = () => {
             {/* below block only applicable in case of new user registration */}
             {isSignup && (
               <Input
-                name="confirmPassword"
-                label="Repeat Password"
-                type="password"
+                name='confirmPassword'
+                label='Repeat Password'
+                type='password'
                 handleChange={handleChange}
               />
             )}
           </Grid>
           <Button
-            type="submit"
+            type='submit'
             fullWidth
-            variant="contained"
-            color="primary"
+            variant='contained'
+            color='primary'
             className={classes.submit}
           >
             {isSignup ? "Register" : "Sign in"}
           </Button>
           {/* button for google login */}
           <GoogleLogin
-            // TODO: use env variables
-            clientId="4902121967-vqeucl2nat3a3dk36emnsj16a3stlf4p.apps.googleusercontent.com"
-            render={(renderProps) => (
+            // TODO: use env variables to store the client ID
+            clientId='4902121967-vqeucl2nat3a3dk36emnsj16a3stlf4p.apps.googleusercontent.com'
+            render={renderProps => (
               <Button
                 className={classes.googleButton}
-                color="primary"
+                color='primary'
                 fullWidth
                 onClick={renderProps.onClick}
                 disabled={renderProps.disabled}
                 startIcon={<Icon />}
-                variant="contained"
+                variant='contained'
               >
                 Google Sign In
               </Button>
             )}
             onSuccess={googleSuccess}
             onFailure={googleFailure}
-            cookiePolicy="single_host_origin"
+            // means that cookies can be shared among same origin resources.
+            cookiePolicy='single_host_origin'
           />
-          <Grid container justify="flex-end">
+          <Grid container justify='flex-end'>
             <Grid item>
               <Button onClick={switchMode}>
                 {isSignup

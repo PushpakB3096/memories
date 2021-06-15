@@ -82,10 +82,11 @@ const Post = ({ post, setCurrentId }) => {
             {post.name.length > 15 ? `${post.name.slice(0, 15)}...` : post.name}
           </Typography>
           {/* displays relative time eg. 5 hours ago */}
-          <Typography variant='body2'>
+          <Typography variant='caption'>
             {moment(post.createdAt).fromNow()}
           </Typography>
         </div>
+        {/* for edit icon */}
         {(user?.result?.googleId === post?.creator ||
           user?.result?._id === post?.creator) && (
           <div className={classes.overlay2} name='edit'>
@@ -104,15 +105,15 @@ const Post = ({ post, setCurrentId }) => {
         )}
         {/* div to show tags */}
         <div className={classes.details}>
-          <Typography variant='body2' color='textSecondary'>
+          <Typography variant='caption' color='textSecondary'>
             {post.tags.map(tag => `#${tag} `)}
           </Typography>
         </div>
         {/* for displaying the post title */}
-        <Typography className={classes.title} variant='h5' gutterBottom>
+        <Typography className={classes.title} variant='h6' gutterBottom>
           {post.title}
         </Typography>
-        {/* this will display the title of the memory */}
+        {/* this will display the message */}
         <CardContent>
           <Typography variant='body2' color='textSecondary' component='p'>
             {post.message}
@@ -124,6 +125,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button
           size='small'
           color='primary'
+          // if the user is not logged in then button is disabled
           disabled={!user?.result}
           onClick={() => dispatch(likePost(post._id))}
         >

@@ -49,7 +49,7 @@ const Post = () => {
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
       <div className={classes.card}>
         <div className={classes.section}>
-          <Typography variant='h3' component='h2'>
+          <Typography variant='h4' component='h2'>
             {post.title}
           </Typography>
           <Typography
@@ -64,7 +64,7 @@ const Post = () => {
             {post.message}
           </Typography>
           <Typography variant='h6'>Created by: {post.name}</Typography>
-          <Typography variant='body1'>
+          <Typography variant='caption'>
             {moment(post.createdAt).fromNow()}
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
