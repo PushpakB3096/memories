@@ -4,9 +4,10 @@
 ## Introduction
 Memories is a simple social media application that allows users to post interesting events that happened in their lives through pictures.
 
-## Technology Stack
+## Technology Stack & Concepts
 * React
 * Redux
+* Redux Middleware - Thunk
 * Material UI
 * Authentication using Google OAuth
 * Node.js
