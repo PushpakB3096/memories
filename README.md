@@ -1,6 +1,8 @@
 # Memories
 
-![Memories](https://i.ibb.co/Z8Y0CJv/Screenshot-2020-10-30-at-11-10-04.png)
+![Screenshot from 2021-06-16 15-54-44](https://user-images.githubusercontent.com/44138832/122203212-71e56f80-cebb-11eb-893d-ef5ec77e81d8.png)
+![Screenshot from 2021-06-16 15-55-39](https://user-images.githubusercontent.com/44138832/122203222-7447c980-cebb-11eb-9453-3f27c7b9baae.png)
+![Screenshot from 2021-06-16 15-56-12](https://user-images.githubusercontent.com/44138832/122203231-76118d00-cebb-11eb-9d3f-8530d0285cf5.png)
 
 ## Introduction
 
