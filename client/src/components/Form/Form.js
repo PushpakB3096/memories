@@ -134,7 +134,7 @@ const Form = ({ currentId, setCurrentId }) => {
             setPostData({ ...postData, tags: e.target.value.split(",") })
           }
         />
-        {/* for image upload */}
+        {/* for image upload in base 64 encoding*/}
         <div className={classes.fileInput}>
           <FileBase
             type='file'
