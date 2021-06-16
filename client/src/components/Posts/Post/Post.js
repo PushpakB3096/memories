@@ -35,14 +35,19 @@ const Post = ({ post, setCurrentId }) => {
         <>
           <ThumbUpAltIcon fontSize='small' />
           &nbsp;
-          {post.likes.length > 1
-            ? `You and ${post.likes.length - 1} others`
-            : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          <Typography variant='caption'>
+            {post.likes.length > 1
+              ? `You and ${post.likes.length - 1} others`
+              : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
+          </Typography>
         </>
       ) : (
         <>
           <ThumbUpAltOutlined fontSize='small' />
-          &nbsp;{post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+          &nbsp;
+          <Typography variant='caption'>
+            {post.likes.length} {post.likes.length === 1 ? "Like" : "Likes"}
+          </Typography>
         </>
       );
     }
@@ -138,7 +143,8 @@ const Post = ({ post, setCurrentId }) => {
             color='primary'
             onClick={() => dispatch(deletePost(post._id))}
           >
-            <DeleteIcon fontSize='small' /> &nbsp; Delete
+            <DeleteIcon fontSize='small' /> &nbsp;{" "}
+            <Typography variant='caption'>Delete</Typography>
           </Button>
         )}
       </CardActions>
