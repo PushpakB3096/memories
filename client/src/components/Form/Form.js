@@ -38,11 +38,15 @@ const Form = ({ currentId, setCurrentId }) => {
     // if we have an ID then that means that we are trying to edit an existing post. Otherwise, we are creating a new post
     if (currentId) {
       dispatch(
-        updatePost(currentId, {
-          ...postData,
-          // gets the name of the user from local storage and sends it as the creator of the post
-          name: user?.result?.name
-        })
+        updatePost(
+          currentId,
+          {
+            ...postData,
+            // gets the name of the user from local storage and sends it as the creator of the post
+            name: user?.result?.name
+          },
+          history
+        )
       );
     } else {
       dispatch(

@@ -116,12 +116,26 @@ export const createPost = (post, history) => async dispatch => {
 };
 
 // action to update a post
-export const updatePost = (id, post) => async dispatch => {
+export const updatePost = (id, post, history) => async dispatch => {
   try {
+    // set loading to true
+    dispatch({
+      type: START_LOADING
+    });
+
     const { data } = await api.updatePost(id, post);
+
+    // navigate to the updated post
+    history.push(`/posts/${data._id}`);
+
     dispatch({
       type: UPDATE,
       payload: data
+    });
+
+    // set loading to false after data is fetched
+    dispatch({
+      type: END_LOADING
     });
   } catch (error) {
     console.error(error);
