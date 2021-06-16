@@ -44,7 +44,7 @@ const Post = () => {
 
   // getting all the related posts which are not the current post
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-  console.log(recommendedPosts);
+
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
       <div className={classes.card}>
