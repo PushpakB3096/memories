@@ -36,7 +36,7 @@ const Post = ({ post, setCurrentId }) => {
           <ThumbUpAltIcon fontSize='small' />
           &nbsp;
           <Typography variant='caption'>
-            {post.likes.length > 1
+            {post.likes.length > 2
               ? `You and ${post.likes.length - 1} others`
               : `${post.likes.length} like${post.likes.length > 1 ? "s" : ""}`}
           </Typography>

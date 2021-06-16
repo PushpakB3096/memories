@@ -72,7 +72,7 @@ const Navbar = () => {
               {/* show the first letter of the name as profile picture */}
               {user.result.name.charAt(0)}
             </Avatar>
-            <Typography className={classes.userName} variant='h6'>
+            <Typography className={classes.userName} variant='subtitle2'>
               {user.result.name}
             </Typography>
             <Button
