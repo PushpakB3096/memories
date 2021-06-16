@@ -37,7 +37,7 @@ app.use("/posts", postRoutes);
 app.use("/users", userRoutes);
 
 // add greetings for deployed API. this is just for testing whether our API works after deployment
-app.use("/", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Welcome to Memories API by Pushpak Bhattacharya");
 });
 

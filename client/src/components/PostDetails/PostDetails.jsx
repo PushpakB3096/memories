@@ -44,7 +44,7 @@ const Post = () => {
 
   // getting all the related posts which are not the current post
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-
+  console.log(recommendedPosts);
   return (
     <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
       <div className={classes.card}>
@@ -85,7 +85,7 @@ const Post = () => {
         </div>
       </div>
       {/* Recommended posts sections goes here */}
-      {recommendedPosts.length && (
+      {recommendedPosts.length > 0 && (
         <div className={classes.section}>
           <Typography variant='h5' gutterBottom>
             You might also be interested in:
@@ -108,7 +108,7 @@ const Post = () => {
                     {message}
                   </Typography>
                   <Typography variant='subtitle1' gutterBottom>
-                    Likes: {likes.length}
+                    Likes: {likes.length > 0 ? likes.length : "0"}
                   </Typography>
                   <img src={selectedFile} width='200px' />
                 </div>
