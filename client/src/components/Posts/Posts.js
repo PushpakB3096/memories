@@ -23,8 +23,8 @@ const Posts = ({ setCurrentId }) => {
       spacing={3}
     >
       {posts?.map(post => (
-        <Grid item xs={12} sm={12} md={6} lg={3}>
-          <Post key={post._id} post={post} setCurrentId={setCurrentId} />
+        <Grid key={post._id} item xs={12} sm={12} md={6} lg={3}>
+          <Post post={post} setCurrentId={setCurrentId} />
         </Grid>
       ))}
     </Grid>
