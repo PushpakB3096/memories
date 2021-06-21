@@ -6,6 +6,7 @@ export const FETCH_ALL = "FETCH_ALL";
 export const FETCH_POST = "FETCH_POST";
 export const FETCH_BY_SEARCH = "FETCH_BY_SEARCH";
 export const LIKE_POST = "LIKE_POST";
+export const CLEAR_POST = "CLEAR_POST";
 
 // auth related
 export const AUTH = "AUTH";

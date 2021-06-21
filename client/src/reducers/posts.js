@@ -7,7 +7,8 @@ import {
   LIKE_POST,
   START_LOADING,
   END_LOADING,
-  FETCH_POST
+  FETCH_POST,
+  CLEAR_POST
 } from "../constants/actionTypes";
 
 const postReducer = (state = { isLoading: true, posts: [] }, action) => {
@@ -49,6 +50,12 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
       return {
         ...state,
         posts: state.posts.filter(post => post._id !== action.payload)
+      };
+    case CLEAR_POST:
+      // clear current post
+      return {
+        ...state,
+        post: action.payload
       };
     default:
       return state;

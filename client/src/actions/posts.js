@@ -7,33 +7,32 @@ import {
   DELETE,
   LIKE_POST,
   START_LOADING,
-  END_LOADING
+  END_LOADING,
+  CLEAR_POST
 } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
 // action to get a post based on ID
 export const getPost = id => async dispatch => {
   try {
-    // set loading to true
-    dispatch({
-      type: START_LOADING
-    });
-
     const { data } = await api.fetchPost(id);
 
-    // dispatch action that sets the posts received to the store
+    // dispatch action that sets the post received to the store
     dispatch({
       type: FETCH_POST,
       payload: data
     });
-
-    // set loading to false after data is fetched
-    dispatch({
-      type: END_LOADING
-    });
   } catch (error) {
     console.error(error);
   }
+};
+
+export const clearPost = () => async dispatch => {
+  // dispatch action that sets the post to null
+  dispatch({
+    type: CLEAR_POST,
+    payload: null
+  });
 };
 
 // action to get all the posts

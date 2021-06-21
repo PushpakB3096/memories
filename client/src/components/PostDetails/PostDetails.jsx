@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useHistory } from "react-router-dom";
 
-import { getPost, getPostsBySearch } from "../../actions/posts";
+import { getPost, getPostsBySearch, clearPost } from "../../actions/posts";
 import useStyles from "./styles";
 
 const Post = () => {
@@ -30,11 +30,17 @@ const Post = () => {
         getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
       );
     }
+
+    return () => {
+      if (post) {
+        dispatch(clearPost());
+      }
+    };
   }, [post]);
 
-  if (!post) return null;
+  // if (!post) return null;
 
-  if (isLoading) {
+  if (isLoading || !post) {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
         <CircularProgress size='7em' />
