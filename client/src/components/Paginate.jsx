@@ -12,7 +12,7 @@ const Paginate = ({ page }) => {
   const dispatch = useDispatch();
   const { numberOfPages } = useSelector(state => state.posts);
 
-  // refetch posts when the page
+  // refetch posts when the page changes
   useEffect(() => {
     if (page) {
       dispatch(getPosts(page));

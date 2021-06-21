@@ -9,7 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useHistory } from "react-router-dom";
 
-import { getPost, getPostsBySearch, clearPost } from "../../actions/posts";
+import {
+  getPost,
+  getPostsBySearch,
+  clearCurrentPost,
+  clearAllPosts
+} from "../../actions/posts";
 import useStyles from "./styles";
 
 const Post = () => {
@@ -27,18 +32,18 @@ const Post = () => {
   useEffect(() => {
     if (post) {
       dispatch(
-        getPostsBySearch({ search: "none", tags: post?.tags.join(",") })
+        getPostsBySearch({ search: "none", tags: post?.tags?.join(",") })
       );
     }
-
-    return () => {
-      if (post) {
-        dispatch(clearPost());
-      }
-    };
   }, [post]);
 
-  // if (!post) return null;
+  useEffect(() => {
+    // remove the posts from the store on navigating away from post details
+    return () => {
+      dispatch(clearCurrentPost());
+      dispatch(clearAllPosts());
+    };
+  }, []);
 
   if (isLoading || !post) {
     return (
@@ -56,7 +61,7 @@ const Post = () => {
       <div className={classes.card}>
         <div className={classes.section}>
           <Typography variant='h4' component='h2'>
-            {post.title}
+            {post?.title}
           </Typography>
           <Typography
             gutterBottom
@@ -64,14 +69,14 @@ const Post = () => {
             color='textSecondary'
             component='h2'
           >
-            {post.tags.map(tag => `#${tag} `)}
+            {post?.tags?.map(tag => `#${tag} `)}
           </Typography>
           <Typography gutterBottom variant='body1' component='p'>
-            {post.message}
+            {post?.message}
           </Typography>
           <Typography variant='h6'>Created by: {post.name}</Typography>
           <Typography variant='caption'>
-            {moment(post.createdAt).fromNow()}
+            {moment(post?.createdAt).fromNow()}
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
           <Typography variant='body1'>
@@ -83,10 +88,10 @@ const Post = () => {
           <img
             className={classes.media}
             src={
-              post.selectedFile ||
+              post?.selectedFile ||
               "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
             }
-            alt={post.title}
+            alt={post?.title}
           />
         </div>
       </div>

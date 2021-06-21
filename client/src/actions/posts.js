@@ -8,7 +8,8 @@ import {
   LIKE_POST,
   START_LOADING,
   END_LOADING,
-  CLEAR_POST
+  CLEAR_POST,
+  CLEAR_ALL_POSTS
 } from "../constants/actionTypes";
 import * as api from "../api/index.js";
 
@@ -27,11 +28,19 @@ export const getPost = id => async dispatch => {
   }
 };
 
-export const clearPost = () => async dispatch => {
-  // dispatch action that sets the post to null
+export const clearCurrentPost = () => async dispatch => {
+  // dispatch action that sets the current post on post details page to null
   dispatch({
     type: CLEAR_POST,
     payload: null
+  });
+};
+
+export const clearAllPosts = () => async dispatch => {
+  // dispatch action that sets the posts to null
+  dispatch({
+    type: CLEAR_ALL_POSTS,
+    payload: []
   });
 };
 
@@ -41,6 +50,11 @@ export const getPosts = page => async dispatch => {
     // set loading to true
     dispatch({
       type: START_LOADING
+    });
+
+    dispatch({
+      type: CLEAR_ALL_POSTS,
+      payload: []
     });
 
     const { data } = await api.fetchPosts(page);

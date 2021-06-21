@@ -8,7 +8,8 @@ import {
   START_LOADING,
   END_LOADING,
   FETCH_POST,
-  CLEAR_POST
+  CLEAR_POST,
+  CLEAR_ALL_POSTS
 } from "../constants/actionTypes";
 
 const postReducer = (state = { isLoading: true, posts: [] }, action) => {
@@ -53,6 +54,12 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
       };
     case CLEAR_POST:
       // clear current post
+      return {
+        ...state,
+        post: action.payload
+      };
+    case CLEAR_ALL_POSTS:
+      // clear all posts
       return {
         ...state,
         post: action.payload
