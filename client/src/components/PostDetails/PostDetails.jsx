@@ -38,13 +38,12 @@ const Post = () => {
   }, [post]);
 
   useEffect(() => {
-    // remove the posts from the store on navigating away from post details
-    return () => {
-      dispatch(clearCurrentPost());
-      dispatch(clearAllPosts());
-    };
+    // clear the current post and list of posts (for recommendations) as soon as this loads
+    dispatch(clearCurrentPost());
+    dispatch(clearAllPosts());
   }, []);
 
+  // show circular loading when the loading state is true or there is no post to display
   if (isLoading || !post) {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
@@ -57,78 +56,82 @@ const Post = () => {
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
 
   return (
-    <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
-      <div className={classes.card}>
-        <div className={classes.section}>
-          <Typography variant='h4' component='h2'>
-            {post?.title}
-          </Typography>
-          <Typography
-            gutterBottom
-            variant='h6'
-            color='textSecondary'
-            component='h2'
-          >
-            {post?.tags?.map(tag => `#${tag} `)}
-          </Typography>
-          <Typography gutterBottom variant='body1' component='p'>
-            {post?.message}
-          </Typography>
-          <Typography variant='h6'>Created by: {post.name}</Typography>
-          <Typography variant='caption'>
-            {moment(post?.createdAt).fromNow()}
-          </Typography>
-          <Divider style={{ margin: "20px 0" }} />
-          <Typography variant='body1'>
-            <strong>Comments - Might be coming later</strong>
-          </Typography>
-          <Divider style={{ margin: "20px 0" }} />
-        </div>
-        <div className={classes.imageSection}>
-          <img
-            className={classes.media}
-            src={
-              post?.selectedFile ||
-              "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-            }
-            alt={post?.title}
-          />
-        </div>
-      </div>
-      {/* Recommended posts sections goes here */}
-      {recommendedPosts.length > 0 && (
-        <div className={classes.section}>
-          <Typography variant='h5' gutterBottom>
-            You might also be interested in:
-          </Typography>
-          <Divider />
-          <div className={classes.recommendedPosts}>
-            {recommendedPosts.map(
-              ({ title, message, name, likes, selectedFile, _id }) => (
-                <div
-                  style={{ margin: "20px", cursor: "pointer" }}
-                  onClick={() => history.push(`/posts/${_id}`)}
-                >
-                  <Typography variant='h6' gutterBottom>
-                    {title}
-                  </Typography>
-                  <Typography variant='subtitle2' gutterBottom>
-                    {name}
-                  </Typography>
-                  <Typography variant='subtitle2' gutterBottom>
-                    {message}
-                  </Typography>
-                  <Typography variant='subtitle1' gutterBottom>
-                    Likes: {likes.length > 0 ? likes.length : "0"}
-                  </Typography>
-                  <img src={selectedFile} width='200px' />
-                </div>
-              )
-            )}
+    <>
+      {post && (
+        <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
+          <div className={classes.card}>
+            <div className={classes.section}>
+              <Typography variant='h4' component='h2'>
+                {post?.title}
+              </Typography>
+              <Typography
+                gutterBottom
+                variant='h6'
+                color='textSecondary'
+                component='h2'
+              >
+                {post?.tags?.map(tag => `#${tag} `)}
+              </Typography>
+              <Typography gutterBottom variant='body1' component='p'>
+                {post?.message}
+              </Typography>
+              <Typography variant='h6'>Created by: {post.name}</Typography>
+              <Typography variant='caption'>
+                {moment(post?.createdAt).fromNow()}
+              </Typography>
+              <Divider style={{ margin: "20px 0" }} />
+              <Typography variant='body1'>
+                <strong>Comments - Might be coming later</strong>
+              </Typography>
+              <Divider style={{ margin: "20px 0" }} />
+            </div>
+            <div className={classes.imageSection}>
+              <img
+                className={classes.media}
+                src={
+                  post?.selectedFile ||
+                  "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+                }
+                alt={post?.title}
+              />
+            </div>
           </div>
-        </div>
+          {/* Recommended posts sections goes here */}
+          {recommendedPosts.length > 0 && (
+            <div className={classes.section}>
+              <Typography variant='h5' gutterBottom>
+                You might also be interested in:
+              </Typography>
+              <Divider />
+              <div className={classes.recommendedPosts}>
+                {recommendedPosts.map(
+                  ({ title, message, name, likes, selectedFile, _id }) => (
+                    <div
+                      style={{ margin: "20px", cursor: "pointer" }}
+                      onClick={() => history.push(`/posts/${_id}`)}
+                    >
+                      <Typography variant='h6' gutterBottom>
+                        {title}
+                      </Typography>
+                      <Typography variant='subtitle2' gutterBottom>
+                        {name}
+                      </Typography>
+                      <Typography variant='subtitle2' gutterBottom>
+                        {message}
+                      </Typography>
+                      <Typography variant='subtitle1' gutterBottom>
+                        Likes: {likes.length > 0 ? likes.length : "0"}
+                      </Typography>
+                      <img src={selectedFile} width='200px' />
+                    </div>
+                  )
+                )}
+              </div>
+            </div>
+          )}
+        </Paper>
       )}
-    </Paper>
+    </>
   );
 };
 

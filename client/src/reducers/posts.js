@@ -62,7 +62,7 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
       // clear all posts
       return {
         ...state,
-        post: action.payload
+        posts: action.payload
       };
     default:
       return state;
