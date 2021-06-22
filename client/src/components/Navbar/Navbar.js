@@ -43,10 +43,15 @@ const Navbar = () => {
     });
 
     // clears the current user
-    setUser(null);
+    setUser(() => {
+      // redirect user to home page upon logging out
+      history.push("/posts");
 
-    // redirect user to home page upon logging out
-    history.push("/");
+      return null;
+    });
+
+    // setUser(null);
+    // history.push("/");
   };
 
   return (
