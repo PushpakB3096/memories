@@ -16,6 +16,11 @@ import * as api from "../api/index.js";
 // action to get a post based on ID
 export const getPost = id => async dispatch => {
   try {
+    // set loading to true
+    dispatch({
+      type: START_LOADING
+    });
+
     // dispatch action that sets the current post on post details page to null
     dispatch({
       type: CLEAR_POST,
