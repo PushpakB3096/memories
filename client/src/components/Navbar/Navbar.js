@@ -56,7 +56,7 @@ const Navbar = () => {
 
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>
-      <Link to='/posts' className={classes.brandContainer}>
+      <Link to='/' className={classes.brandContainer}>
         <img src={memoriesLogo} alt='text' height='68px' />
       </Link>
       <Toolbar className={classes.toolbar}>
