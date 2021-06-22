@@ -112,7 +112,7 @@ const Home = () => {
                 // when user clicks on cross mark to remove a particular tag
                 onDelete={handleDelete}
               />
-              <Button color='primary' variant='contained'>
+              <Button color='primary' variant='contained' onClick={searchPosts}>
                 Search
               </Button>
             </AppBar>
