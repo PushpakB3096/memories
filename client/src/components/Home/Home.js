@@ -96,6 +96,7 @@ const Home = () => {
                 label='Search memories'
                 fullWidth
                 value={search}
+                autoComplete='off'
                 onChange={e => {
                   setSearch(e.target.value);
                 }}
