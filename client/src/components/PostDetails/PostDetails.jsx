@@ -122,7 +122,7 @@ const Post = () => {
                       <Typography variant='subtitle1' gutterBottom>
                         Likes: {likes.length > 0 ? likes.length : "0"}
                       </Typography>
-                      <img src={selectedFile} width='200px' />
+                      <img src={selectedFile} width='210px' height='175px' />
                     </div>
                   )
                 )}
